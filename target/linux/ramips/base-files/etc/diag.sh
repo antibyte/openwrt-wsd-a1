@@ -291,6 +291,9 @@ get_status_led() {
 	zbt-wr8305rt)
 		status_led="$boardname:green:sys"
 		;;
+	wsd-a1)
+		status_led="$board:blue:wifi"
+		;;
 	wcr-1166ds|\
 	whr-300hp2|\
 	wsr-1166|\
