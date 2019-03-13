@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# Copyright (C) 2011 OpenWrt.org
+#
+
+uci batch <<EOF
+fstab.@global[0]=global
+fstab.@global[0].anon_swap='0'
+fstab.@global[0].auto_swap='1'
+fstab.@global[0].auto_mount='1'
+fstab.@global[0].delay_root='5'
+fstab.@global[0].check_fs='0'
+fstab.@global[0].anon_mount='1'
+fstab.@mount[0]=mount
+fstab.@mount[0].target='/mnt/sdb1'
+fstab.@mount[0].enabled='1'
+fstab.@mount[0]=mount
+fstab.@mount[0].target='/mnt/sda1'
+fstab.@mount[0].enabled='1'
+EOF
+
+uci commit fstab
+
+exit 0

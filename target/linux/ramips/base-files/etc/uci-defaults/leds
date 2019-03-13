@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# Copyright (C) 2011 OpenWrt.org
+#
+
+uci batch <<EOF
+set system.@led[0]=led
+set system.@led[0].default='0'
+set system.@led[0].name='bluelled'
+set system.@led[0].sysfs='wsd-a1:blue:wifi'
+set system.@led[0].trigger='netdev'
+set system.@led[0].dev='wlan1'
+set system.@led[0].mode='link tx rx'
+EOF
+
+uci commit system
+
+exit 0
