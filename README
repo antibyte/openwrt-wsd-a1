@@ -1,3 +1,42 @@
+  The Asus WSD-A1 is a mobile wireless storage device.
+  Inside it consists of :
+  
+Mt7620a (SOC + 2.4GHz Wifi)
+Mt7610en (5 GHz WIFI)
+EM68B16CWQH (64MB DDR2 RAM)
+25Q128CSIG (128 Mbit SPI NOR Flash)
+HT66F40 (8bit MCU , maybe controlling power, shutdown, USB switch)
+Fe1.1s (4 Port USB Hub)
+Alcor AU6472 (USB card reader IC)
+RFFM4501 (5ghz WIFI frontend)
+MP2625 2A battery charger
+UM7222MA (USB Switch)
+
+There is one 32GB microSD card inside (the advertised SSD).
+
+The factory firmware has a telnet port open, the root password is "20080826".
+While booting the factory firmware looks for a file "EnterRouterMode.sh" on the SD card and executes it if found.
+So you can have your own scripts run.
+
+The case is very hard to open. I got it open by clamping it in a vice until a small slit is opening and then using
+a plastik opener tool for mobile phones to slide in the slit.
+
+There is a 3.3V serial interface on pads as well as a ethernet port on labeled pads. I hooked a ethernet transformer
+to those pads and it worked.
+If connected via ethernet you can hold the reset button for 20 seconds while powering on and it will try to fetch a firmware update
+via TFTP. TFTP server has to run on 10.10.10.254. The device loads to files from there. first one has to be named "kernel" and
+the second one "rootfs". Those are then flashed and the device is rebooted.
+
+Flashing OpenWrt has to be done via mtd_write while logged in via telnet.
+
+
+The OpenWrt adaption found here has some limitations at the moment.
+
+- 5GHz WIFI is not working.
+- Power button does a hard shutdown. The HT66F40 microcontroller seems to monitor the button and kills power
+  after some seconds. I have not figured out yet how this is signaled to the SOC.
+  
+  
   _______                     ________        __
  |       |.-----.-----.-----.|  |  |  |.----.|  |_
  |   -   ||  _  |  -__|     ||  |  |  ||   _||   _|
