@@ -21,20 +21,28 @@ So you can have your own scripts run.
 The case is very hard to open. I got it open by clamping it in a vice until a small slit is opening and then using
 a plastik opener tool for mobile phones to slide in the slit.
 
-There is a 3.3V serial interface on pads as well as a ethernet port on labeled pads. I hooked a ethernet transformer
+There is a 3.3V serial interface on pads as well as a ethernet port on labeled pads. I hooked an ethernet transformer
 to those pads and it worked.
 If connected via ethernet you can hold the reset button for 20 seconds while powering on and it will try to fetch a firmware update
-via TFTP. TFTP server has to run on 10.10.10.254. The device loads to files from there. first one has to be named "kernel" and
-the second one "rootfs". Those are then flashed and the device is rebooted.
+via TFTP. TFTP server has to run on 10.10.10.254. The device loads two files from there. first one has to be named "kernel" and
+the second one "rootfs". Those are then flashed to the corresponding partitions and the device is rebooted.
 
-Flashing OpenWrt has to be done via mtd_write while logged in via telnet.
+Flashing OpenWrt has to be done via mtd_write while logged in via telnet or using the "EnterRouterMode.sh" script route.
 
+cd /data/sdb1
+mtd_write write ./kernel.bin Kernel_RootFS
+mtd_write -r write ./rootfs.bin Rootfs
 
-The OpenWrt adaption found here has some limitations at the moment.
+Keep in mind that at the moment there is no recovery possible if something goes wrong without opening the device !
+Backup the partitons before changing anything. (cat /dev/mtdX > /data/sdb1/mtd.bin - X = 1..8)
+
+The OpenWrt adaption found here has some limitations at the moment :
 
 - 5GHz WIFI is not working.
 - Power button does a hard shutdown. The HT66F40 microcontroller seems to monitor the button and kills power
   after some seconds. I have not figured out yet how this is signaled to the SOC.
+  
+  
   
   
   _______                     ________        __
